@@ -51,7 +51,12 @@ module.exports = class IncludeDependencies {
     const { functions = {} } = service;
 
     for (const functionName in functions) {
-      this.processFunction(functionName);
+      const functionObject = service.functions[functionName];
+      if (functionObject.includeDependenciesByPlugin === true) {
+        console.log('Include dependencies: ' + functionName);
+        this.processFunction(functionName);
+        continue;
+      }
     }
   }
 
